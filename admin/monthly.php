@@ -17,6 +17,7 @@
 			  <li><a href="weekly.php">Weekly Sales Report</a></li>
 			  <li><a href="export.php">Export</a></li>
 			</ol>
+			<label>Year</label>
 			<input type="text" id="year" value=""/>
 			<button  id="search">filter chart <i class="fas fa-chart-bar fa-sm"></i></button>
 			<div id="chart1"></div>
