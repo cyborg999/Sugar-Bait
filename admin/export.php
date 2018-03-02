@@ -23,6 +23,7 @@
         <ol class="breadcrumb">
           <li class="s"><a href="report.php">Yearly Sales Report</a></li>
           <li><a href="monthly.php">Monthly Sales Report</a></li>
+          <li><a href="weekly.php">Weekly Sales Report</a></li>
           <li class="active">Export</li>
         </ol>
         <h2>Export Report</h2>
@@ -40,19 +41,25 @@
         </select>
       </div>
       <div class="columns col-sm-6">
-        <form id="form">
+        <form id="form" class="pull-right">
           <em>Products</em>
-          <select id="products" data-placeholder="Your Favorite Types of Bear" multiple class="chosen-select" tabindex="8">
+          <select id="products" data-placeholder="Select Package" multiple class="chosen-select" tabindex="8">
             <option value=""></option>
             <?php foreach($packages as $idx => $package) : ?>
             <option selected value="<?= $package['id']; ?>"><?= $package['name']; ?></option>
             <?php endforeach ?>
           </select>
-          <button class="filter">Filter <i class="fas fa-search fa-sm"></i></button>
+          <button class="filter btn btn-sm">Filter <i class="fas fa-search fa-sm"></i></button>
           <!-- <button class="btns">PDF <i class="fas fa-file-pdf fa-sm"></i></button> -->
         </form>    
-          <a id="csv" href="csv.php"><button">Export CSV <i class="fas fa-file-alt fa-sm"></i></button></a>
       </div>
+      <div class="columns col-sm-6">
+          <br>
+          <a id="csv" class="pusll-right" href="csv.php"><button">Export CSV <i class="fas fa-file-alt fa-sm"></i></button></a>
+          <br>
+          <br>
+      </div>
+      <div class="columns col-sm-6"></div>
     </article> 
     <article class="row">
       <div class="col-sm-12">
@@ -95,6 +102,7 @@
       <td>[DATE]</td>
     </tr>
 </script>
+<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script src="reports/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script src="../js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="reports/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>

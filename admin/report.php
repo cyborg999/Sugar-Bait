@@ -9,6 +9,7 @@
 			<ol class="breadcrumb">
 			  <li class="active">Yearly Sales Report</li>
 			  <li><a href="monthly.php">Monthly Sales Report</a></li>
+			  <li><a href="weekly.php">Weekly Sales Report</a></li>
 			  <li><a href="export.php">Export</a></li>
 			</ol>
 			<div id="chart1"></div>

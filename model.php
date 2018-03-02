@@ -17,7 +17,14 @@ class Model {
 		$this->getProductListener();
 		$this->loadYearlySaleListener();
 		$this->loadMonthlySaleListener();
+		$this->loadWeeklySalesListener();
 	}	
+
+	public function loadWeeklySalesListener(){
+		if(isset($_POST['loadWeeklySales'])){
+			$this->loadWeeklySale($_POST['id'], true);
+		}
+	}
 
 	public function loadMonthlySaleListener(){
 		if(isset($_POST['loadMonthlySale'])){
@@ -34,6 +41,71 @@ class Model {
 	public function loadYearlySaleListener(){
 		if(isset($_POST['loadYearlySale'])){
 			$this->getYearlySales();
+		}
+	}
+
+	public function loadWeeklySale($id, $ajaxed = false){
+		$sql = "
+			SELECT t1.id,t1.status,t1.packagenum,t1.date,t1.packagenum, t2.name,count(*) as total
+			FROM reservepackage t1
+			LEFT JOIN packages t2 ON t1.packagenum = t2.id
+			WHERE packagenum = ".$id."
+			GROUP BY t1.date,t1.status
+			";
+
+		$records = $this->db->query($sql)->fetchAll();
+		$data = array();
+
+		foreach($records as $idx => $record) {
+			//set default
+			if(! isset($data[$record['date']][$record['packagenum']][0])){
+				$data[$record['date']][$record['packagenum']][0] = 0;
+			}
+			if(! isset($data[$record['date']][$record['packagenum']][1])){
+				$data[$record['date']][$record['packagenum']][1] = 0;
+			}
+			if(! isset($data[$record['date']][$record['packagenum']][2])){
+				$data[$record['date']][$record['packagenum']][2] = 0;
+			}
+
+			$data[$record['date']][$record['packagenum']][$record['status']] = $record['total'];
+		}
+
+		$csv = array();
+		$list = array();
+		$result = array();
+
+		// format data to this 3/11/13,15574,11356
+		$file = fopen("weekly.csv","w");
+		$counter = 0;
+		$text = "";
+
+		foreach($data as $idx => $d){
+			if($counter == 0){
+				$csv = implode(",", array("Date","On_Process","Pending","Deal"));
+				fputcsv($file,explode(',',$csv));
+
+				if($ajaxed) {
+					$text .= $csv."\n";
+				}
+			}
+
+			$d = reset($d);
+			$csv = implode(",", array($idx,$d[0],$d[1],$d[2]));
+
+			fputcsv($file,explode(',',$csv));
+			
+			if($ajaxed) {
+				$text .= $csv."\n";
+			}
+
+			$counter++;
+		}
+
+		fclose($file); 
+
+		if($ajaxed) {
+			die(json_encode($text));
 		}
 	}
 
@@ -138,6 +210,15 @@ class Model {
 			WHERE  (t1.status = '". $data['status']."' )
 				AND (t1.packagenum IN (".$packages."))
 				AND (t1.date BETWEEN '".$from."' AND '".$to."')";
+
+		if(empty($data)){
+			$sql = "
+			SELECT t1.*,t2.name
+			FROM reservepackage t1
+			LEFT JOIN packages t2 ON t1.packagenum = t2.id
+			ORDER BY t1.status";
+		} 
+		
 		$records = $this->db->query($sql)->fetchAll();
 
 		if($csv == true){
@@ -198,10 +279,10 @@ class Model {
 	
 	public function exportCSVListener($data){
 			$users = array();
-			$users[] = array("Package Number", "Name", "Date Purchased");
+			$users[] = array("Package Number", "Package Name", "Name", "Date Purchased");
 
 			foreach($data as $idx => $user) {
-				$users[] = array($user['packagenum'], $user['firstname'], $user['date']);
+				$users[] = array($user['packagenum'], $user['name'],$user['firstname'], $user['date']);
 			}
 			$this->download_send_headers("data_export_" . date("Y-m-d") . ".csv");
 			echo $this->array2csv(array_values($users));

@@ -14,6 +14,7 @@
 			<ol class="breadcrumb">
 			  <li><a href="export.php">Yearly Sales Report</a></li>
 			  <li class="active">Monthly Sales Report</li>
+			  <li><a href="weekly.php">Weekly Sales Report</a></li>
 			  <li><a href="export.php">Export</a></li>
 			</ol>
 			<input type="text" id="year" value=""/>
