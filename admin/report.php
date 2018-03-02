@@ -8,13 +8,14 @@
 		<div class="col-sm-12">
 			<ol class="breadcrumb">
 			  <li class="active">Yearly Sales Report</li>
+			  <li><a href="monthly.php">Monthly Sales Report</a></li>
 			  <li><a href="export.php">Export</a></li>
 			</ol>
 			<div id="chart1"></div>
 		</div>
 	</div>
 </main>
-<script src="../js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="reports/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
 	(function($){
 	 	$(document).ready(function(){

@@ -22,7 +22,8 @@
       <div class="columns col-sm-12">
         <ol class="breadcrumb">
           <li class="s"><a href="report.php">Yearly Sales Report</a></li>
-          <li>Export</li>
+          <li><a href="monthly.php">Monthly Sales Report</a></li>
+          <li class="active">Export</li>
         </ol>
         <h2>Export Report</h2>
       </div>
@@ -94,7 +95,6 @@
       <td>[DATE]</td>
     </tr>
 </script>
-<script src="reports/chosen/docsupport/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="reports/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script src="../js/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="reports/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
