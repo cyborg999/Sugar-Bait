@@ -1,0 +1,249 @@
+body {
+  width: 100%;
+  height: 100%;
+  font-family: Raleway;
+/*
+  background: url(../image/mahal.png) no-repeat fixed;
+  background-size: cover;
+*/
+  background-color:#F08080 ;
+
+}
+
+/* Navbar */
+.navbar-default {
+  background-color: #eee;
+  border-bottom: #F08080 solid 2px;
+}
+.navbar-default .navbar-brand {
+  color: #8B4513;
+  font-weight: bold;
+  background-color: white;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #8B4513;
+  font-size: 13px;
+}
+.navbar-default .navbar-nav > .active > a {
+  background-color: #F08080;
+  color: #eee;
+}
+.navbar-default .navbar-nav > li > a:hover{
+  background-color: #F08080;
+  color: #eee;
+}
+.title {
+  font-weight: 900;
+  color: #F08080;
+}
+
+/* End Navbar*/
+
+.container {
+  background-color: rgba(255,255,255,255);
+
+}
+.slogan {
+  padding: 2px;
+}
+.jumbotron {
+  margin-top: 0px;
+  background: url(../image/banner.png) no-repeat;
+  background-size: cover;
+}
+.forceColor1 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 250);
+  border-bottom: #F08080 solid 5px;
+  border-left: #F08080 solid 5px;
+  border-right: #F08080 solid 5px;
+  border-top: #F08080 solid 5px;
+  z-index: -1;
+}
+.forceColor2 {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   left: 0;
+   top: 0;
+   background-color: rgba(240, 128, 128, 0.6);
+   z-index: -1;
+}
+.logo {
+    width: 60%;
+    height: 60%;
+    text-align: center;
+    margin: auto;    
+    display: block;
+}
+.sblogo {
+    padding: 30px;
+}
+.error {
+    text-align: center;
+    font-size: 5px;
+}
+.newgallery {
+    margin-top: 15px;
+}
+hr.style {
+    height: 6px;
+	background: url(../image/hr-11.png) repeat-x 0 0;
+    border: 0;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+h3.loc {
+    font-family: Raleway;
+    font-size: 17px;
+}
+h4.num {
+    font-family: Raleway;
+    font-size: 15px;
+    text-decoration: none;
+    text-decoration-line: none;
+}
+.fa {
+  padding: 8px;
+  font-size: 30px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+.fa:hover {
+  background-color: #b7d1b8;
+  border-color: #8B4513; 
+}
+
+.fa-facebook {
+  background: #f08080;
+  color: white;
+}
+.fa-facebook:hover {
+  color: black;
+  text-decoration-line: none;
+  text-decoration: none;
+}
+
+.fa-twitter {
+  background: #f08080;
+  color: white;
+}
+.page1 {
+    color: black;
+    text-align: center;
+    padding: 20px 20px;
+}
+.page2 {
+    color: white;
+    height: 543px;
+    align-content: center;
+    text-align: center;
+}
+
+.fa-twitter:hover {
+  color: black;
+  text-decoration-line: none;
+  text-decoration: none;
+}
+
+.fa-instagram {
+  background: #f08080;
+  color: white;
+}
+
+.fa-instagram:hover {
+  color: black;
+  text-decoration-line: none;
+  text-decoration: none;
+}
+
+.close{
+  color:#ccc;
+  float: right;
+  font-size:30px;
+  color:#000;
+}
+
+.close:hover,.close:focus{
+  color:#000;
+  text-decoration: none;
+  cursor:pointer;
+}
+.modal-content{
+  background-color:#f4f4f4;
+  margin: 10% auto;
+  width: 100%;
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
+  animation-name:modalopen;
+  animation-duration:1s;
+}
+.modal-header h2, .modal-footer h3{
+  margin:0;
+}
+.modal-header{
+  font-family: Raleway;
+  font-weight: bold;
+  background-color: #F08080;
+  padding:15px;
+  color:#eee; 
+}
+.modal-body {
+  margin: auto;
+}
+.modal-footer{
+  background-color: #F9BF3B;
+  color:#000;
+  text-align: center;
+}
+.modal-body .form-horizontal .control-label {
+  text-align: left;
+}
+.modal-body .form-horizontal .buttons {
+  align-items: right;
+}
+
+.clsDatePicker {
+    z-index: 100000;
+}
+
+
+.badge {
+  position: absolute;
+  right: 11px;
+  top: 6px;
+  color: #fff;
+  background-color: red;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 10px;
+}
+
+
+.foot {
+  font-weight: 900;
+  color: #8B4513;
+}
+.subtitle {
+  color: black;
+  font-weight: bold;
+}
+.footer {
+   margin-top: 20px;
+   position: static;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #F08080;
+   color: white;
+   text-align: center;
+   padding: 5px 5px; 
+}
+
+
