@@ -1,4 +1,7 @@
 <?php include_once "header.php"; ?>
+  <link rel="stylesheet" href="../js/fontawesome/web-fonts-with-css/css/fontawesome.min.css">
+  <link rel="stylesheet" href="../js/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+  
 <main class="container">
 	<?php $active="report"; include_once "nav.php"; ?>
 	<script src="../js/code/highcharts.js"></script>
