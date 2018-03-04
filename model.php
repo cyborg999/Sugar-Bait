@@ -18,11 +18,132 @@ class Model {
 		$this->loadYearlySaleListener();
 		$this->loadMonthlySaleListener();
 		$this->loadWeeklySalesListener();
+		$this->addMessageListener();
+		$this->initialLoadListener();
+		$this->updateSeenListener();
+		$this->loadMessageListener();
+		$this->loadPerChatListener();
 	}	
+
+	public function getNotificationById(){
+		$record =  $this->db->query("
+				SELECT count(*) as total
+				FROM notif
+				WHERE id = ".$_SESSION['id'])->fetchAll();
+
+		return reset($record);
+	}
+
+	public function getNotificationByName(){
+		//query copied from the original code, this is wtf coding
+		$record =  $this->db->query("
+				SELECT count(*) as total
+				FROM notif
+				WHERE lastname = '".$_SESSION['last']."' and firstname = '".$_SESSION['name']."'")->fetchAll();
+
+		return reset($record);
+	}
+
+	public function loadPerChatListener(){
+		if(isset($_POST['loadPerChat'])){
+			$sql = "";
+
+			if($_SESSION['sess_userrole'] == "user"){
+				$sql = "
+					SELECT *
+					FROM message
+					WHERE seen = 0 AND userid = ".$_SESSION['sess_user_id'];
+
+			} else {
+				$sql = "SELECT *
+					FROM message
+					WHERE seen = 0 AND adminid = ".$_SESSION['sess_user_id'];
+			}
+
+			$stmnt =  $this->db->query($sql)->fetchAll();
+			$records = array();
+
+			foreach($stmnt as $x => $record) {
+				$class = "";
+
+				if($_SESSION['sess_userrole'] == "admin"){
+					$class = ($record['seenby'] == "user") ? "notyou" : "";
+				} else {
+					$class = ($record['seenby'] == "admin") ? "" : "notyou";
+				}
+
+				$content = htmlspecialchars_decode($record['content']);
+				$record['content'] = "<span  title='".$record['date']."' class='rchats".$record['id']." r ".$class."'>".$content."</span>";
+				$records[] = $record;
+			}
+
+			die(json_encode($records));
+		}
+	}
+
+	public function loadMessageListener(){
+		if(isset($_POST['loadMessage'])){
+			$sql = "";
+			if($_SESSION['sess_userrole'] == "user"){
+				$sql = "
+					SELECT adminid,count(*) as total
+					FROM message
+					WHERE seenby ='user' AND seen = 0 AND userid = ".$_SESSION['sess_user_id']."
+					GROUP BY adminid";		
+
+			} else {
+				$sql = "
+					SELECT userid,count(*) as total
+					FROM message
+					WHERE seenby ='admin' AND seen = 0 AND  adminid = ".$_SESSION['sess_user_id']."
+					GROUP BY userid
+					";
+			}
+			
+			$record =  $this->db->query($sql)->fetchAll();
+
+			die(json_encode($record));
+		}
+	}
+
+	public function initialLoadListener(){
+		if(isset($_POST['initialMessage'])){
+			$userId = $_SESSION['sess_user_id'];
+			$adminId = $_POST['id'];
+
+			$this->getInitialLoad($userId, $adminId);
+		}
+	}
 
 	public function loadWeeklySalesListener(){
 		if(isset($_POST['loadWeeklySales'])){
 			$this->loadWeeklySale($_POST['id'], true);
+		}
+	}
+
+	public function updateSeenListener(){
+		if(isset($_POST['updateSeen'])){
+			$sql = "";
+
+			if($_SESSION['sess_userrole'] == "admin"){
+				$sql = "
+					UPDATE message
+					SET seen = 1
+					WHERE adminid = ".$_SESSION['sess_user_id']."
+					AND seenby='admin'
+					AND userid = ".$_POST['id'];
+			} else {
+				$sql = "
+					UPDATE message
+					SET seen = 1
+					WHERE userid = ".$_SESSION['sess_user_id']."
+					AND seenby='user'
+					AND adminid = ".$_POST['id'];
+			}
+
+			$this->db->prepare($sql)->execute(array());
+
+			die(json_encode(array("updated")));
 		}
 	}
 
@@ -38,10 +159,82 @@ class Model {
 		}
 	}
 
+	public function getInitialLoad($userId, $adminId) {
+		$records = array();
+		$stmnt =  $this->db->query("
+				SELECT *
+				FROM message
+				WHERE (userid = ".$userId." AND adminid = ".$adminId.")
+				OR (userid = ".$adminId." AND adminid = ".$userId.")
+				ORDER BY date
+			")->fetchAll();
+
+		foreach($stmnt as $x => $record) {
+			$class = "";
+
+			if($_SESSION['sess_userrole'] == "admin"){
+				$class = ($record['seenby'] == "user") ? "notyou" : "";
+
+			} else {
+				$class = ($record['seenby'] == "admin") ? "notyou" : "";
+
+			}
+
+			$content = htmlspecialchars_decode($record['content']);
+			$records[]['content'] = "<span  title='".$record['date']."' class='rchats".$record['id']." r ".$class."'>".$content."</span>";
+		}
+
+		die(json_encode($records));
+	}
+
 	public function loadYearlySaleListener(){
 		if(isset($_POST['loadYearlySale'])){
 			$this->getYearlySales();
 		}
+	}
+
+	public function addMessageListener(){
+		if(isset($_POST['addMessage'])){
+			$content = htmlspecialchars(str_replace("<div><br></div>", "", $_POST['content']));
+			$this->sendMessage($_POST['id'], $content);
+		}
+	}
+
+	public function sendMessage($receiver, $content){
+		// $content1 = htmlspecialchars(($content));
+		// $content2 = htmlspecialchars_decode(($content));
+		// var_dump($content);
+		// op($receiver);
+		$seener = ($_SESSION['sess_userrole'] == "admin") ? "user" : "admin"; 
+		$adminid = ($_SESSION['sess_userrole'] == "admin") ? $_SESSION['sess_user_id'] : $receiver;
+		$userid = ($_SESSION['sess_userrole'] == "admin") ? $receiver : $_SESSION['sess_user_id'];	
+		$this->db->prepare("
+				INSERT INTO message
+				VALUES(?,?,?,?,?,?,?)
+			")->execute(array(null,$content,$userid,$adminid,null,0, $seener));
+
+			$records = array();
+			$t=time();
+
+			$records['content'] = "<span title='".date("Y-m-d",$t)."' class='notyou r'>".htmlspecialchars_decode($content)."</span>";
+
+			die(json_encode($records));
+	}
+
+	public function getAllAdmin(){
+		return $this->db->query("
+			SELECT *
+			FROM users
+			WHERE role = 'admin'
+			")->fetchAll();
+	}
+
+	public function getAllUser(){
+		return $this->db->query("
+			SELECT *
+			FROM users
+			WHERE role = 'user'
+			")->fetchAll();
 	}
 
 	public function loadWeeklySale($id, $ajaxed = false){
@@ -185,6 +378,11 @@ class Model {
 		} else {
 			header("Location:../index.php");
 		}
+	}
+	public function restricAccessUser(){
+		if(!isset($_SESSION['sess_userrole'])){
+			header("Location:../index.php");
+		} 
 	}
 	public function getProductListener(){
 		if(isset($_POST['getProducts'])){

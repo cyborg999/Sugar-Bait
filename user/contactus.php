@@ -45,6 +45,7 @@
               <ul class="nav navbar-nav">
                 <li><a href="packages.php">BOOKING</a></li>
                 <li class="active"><a href="contactus.php">CONTACT US</a></li>
+                <li><a href="messages.php">CHAT</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><?php echo $_SESSION['name'];?></a></li>

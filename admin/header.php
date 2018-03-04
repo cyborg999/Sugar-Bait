@@ -21,8 +21,6 @@
     <link rel="stylesheet" href="../css/facebox.css">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,700" rel="stylesheet" type='text/css'>
-     
-
     <script src="../lib/jquery.js" type="text/javascript"></script>
 
 
