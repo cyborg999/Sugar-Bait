@@ -201,17 +201,29 @@
 						success : function(res){
 							var classId = ".s"+chatId;
 							var target = $(classId).find(".start-convo");
-
+							console.log(classId);
+							console.log(res);
 							// $(".start-convo").html("");
 							for(var i in res) {
 								var id = res[i].userid;
+
+								if(chatId == id){
+									console.log("march"+id);
+									$(".rchats"+res[i].id).remove();
+									target.append(res[i].content);
+								} else {
+									console.log("mismatch"+id+ " "+chatId);
+									if(res[i].adminid == chatId){
+										$(".rchats"+res[i].id).remove();
+										target.append(res[i].content);
+									}
+								}
 
 								if(id ==null){
 									id = res[i].adminid;
 								}
 
-								$(".rchats"+res[i].id).remove();
-								target.append(res[i].content);
+								
 								// target.append(res[i].content);
 							}
 
@@ -281,7 +293,7 @@
 					});
 
 					//update seen status
-					chats.on("click", function(){
+					chats.on("click focus", function(){
 						var me = $(this);
 						var id = me.data("id");
 
