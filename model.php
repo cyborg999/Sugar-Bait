@@ -34,6 +34,15 @@ class Model {
 		return reset($record);
 	}
 
+	public function getPackageById($id){
+		$record =  $this->db->query("
+				SELECT *
+				FROM packages
+				WHERE id = ".$id)->fetchAll();
+
+		return reset($record);
+	}
+
 	public function getNotificationByName(){
 		//query copied from the original code, this is wtf coding
 		$record =  $this->db->query("

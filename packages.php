@@ -93,7 +93,14 @@
                             </div>
                             <div class="modal-body">
                               <div class="row">
-                                 
+                                    <style type="text/css">
+                                      #share-buttons {
+                                        margin-top: 40px;
+                                      }
+                                      #share-buttons img {
+                                        width: 39px;
+                                      }
+                                    </style>
                                     <div class="col-md-12 text-center">
                                       <img src="admin/packages/<?php echo $row["image"]; ?>" width="200px" height="200px">
                                      <br>
@@ -101,6 +108,23 @@
                                         <h4><?php echo $row["include"] ?></h4>
                                         <h4><?php echo $row["capacity"] ?></h4>
                                         <h4>Php. <?php echo $row["price"] ?></h4>
+                                        <div id="share-buttons">
+                                          <?php
+                                            $url = __DIR__."/package.php?id=".$row['id'];
+                                          ?>
+                                          <!-- Facebook -->
+                                          <a href="http://www.facebook.com/sharer.php?u=<?= $url;?>" target="_blank">
+                                              <img src="image/facebook.png" alt="Facebook" />
+                                          </a>
+                                          <!-- Google+ -->
+                                          <a href="https://plus.google.com/share?url=<?= $url;?>" target="_blank">
+                                              <img src="image/google.png" alt="Google" />
+                                          </a>
+                                          <!-- Twitter -->
+                                          <a href="https://twitter.com/share?url=<?= $url;?>&amp;text=<?= $row["name"] ?>&amp;hashtags=sugarbait" target="_blank">
+                                              <img src="image/twitter.png" alt="Twitter" />
+                                          </a>
+                                        </div>
                                     </div>
                                  
                               </div>

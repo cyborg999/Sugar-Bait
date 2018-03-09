@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:og="http://ogp.me/ns#"
+xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
   <title>Package Title</title>
 <!--   <meta property="og:url"           content="https://cyborg999.github.io/" />
@@ -14,6 +15,7 @@
 <meta property="og:type" content="movie"/>
 <meta property="og:url" content="http://www.imdb.com/title/tt0117500/"/>
 <meta property="og:image" content="http://lh3.googleusercontent.com/jN9tX6dCJ6_XL9E4K1KCO2Tuwe9_rYUbwv723eu6XGI0PWGLcPs0259VscOu249PPKKcU5AOXrq6JnleEaoK6K_JvZ2PY9lw3pMApzOpTQ=s660"/>
+  <link rel="image_src" href="http://URL-TO-YOUR-IMAGE" / >
 </head>
 <body>
 <div class="columns col-sm-12">
