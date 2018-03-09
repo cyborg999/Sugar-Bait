@@ -14,7 +14,49 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,700" rel="stylesheet" type='text/css'>
+    <style type="text/css">
+       p.wrong {
+        display: none;
+      }
+      .captcha-chat {
+        width: 360px;
+        margin: 0 auto;
+      }
       
+      p.wrong.shake {
+          display: block;
+      }
+      
+      p.wrong.shake {
+          animation: shake .4s cubic-bezier(.36, .07, .19, .97) both;
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+      }
+       @keyframes shake {
+          10%,
+          90% {
+              transform: translate3d(-1px, 0, 0);
+          }
+          20%,
+          80% {
+              transform: translate3d(1px, 0, 0);
+          }
+          30%,
+          50%,
+          70% {
+              transform: translate3d(-2px, 0, 0);
+          }
+          40%,
+          60% {
+              transform: translate3d(2px, 0, 0);
+          }
+      }
+      
+      .controls img {
+          height: 20px;
+      }
+    </style>
       
    </head>
 
@@ -198,6 +240,7 @@
           </div>
         </div>
         <!-- End Modal -->
+    <script src="captcha/js/client_captcha.js" defer></script>
         
         <!-- Register Modal -->
         <div id="modalRegister" class="modal fade">
@@ -260,8 +303,31 @@
                               <input type="hidden" name="user" id="user" class="form-control" value="user">
                             </div>
                           </div>
+                          <div class="form-group capt">
+                                <div class="captcha-chat">
+                                  <div class="captcha-container media">
+                                      <div class="media-body">
+                                          <p class="security">Security Check:</p>                
+                                      </div>
+                                      <div id="captcha">
+                                          <div class="controls">
+                                              <input class="user-text btn-common" placeholder="Type here" type="text" />
+                                              <button class="validate btn-common">
+                                                  <!-- this image should be converted into inline svg -->
+                                                  <img src="captcha/img/enter_icon.png" alt="submit icon">
+                                              </button>
+                                              <button class="refresh btn-common">
+                                                  <!-- this image should be converted into inline svg -->
+                                                  <img src="captcha/img/refresh_icon.png" alt="refresh icon">
+                                              </button>
+                                          </div>
+                                      </div>
+                                      <p class="wrong info">Wrong!, please try again.</p>
+                                  </div>
+                              </div>
+                          </div>
                            
-                          <div class="form-group">
+                          <div class="form-group hidden registerbtn">
                             <div class="col-sm-offset-8 col-sm-4">
                                 <button type="submit" class="btn btn-success custom" name="go" id="go">Submit</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -286,5 +352,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function() {
+        document.body.scrollTop; //force css repaint to ensure cssom is ready
+
+        var timeout; //global timout variable that holds reference to timer
+
+        var btn = $(".registerbtn");
+
+        var captcha = new $.Captcha({
+            onFailure: function() {
+                btn.addClass("hidden");
+                $(".captcha-chat .wrong").show({
+                    duration: 30,
+                    done: function() {
+                        var that = this;
+                        clearTimeout(timeout);
+                        $(this).removeClass("shake");
+                        $(this).css("animation");
+                        //Browser Reflow(repaint?): hacky way to ensure removal of css properties after removeclass
+                        $(this).addClass("shake");
+                        var time = parseFloat($(this).css("animation-duration")) * 1000;
+                        timeout = setTimeout(function() {
+                            $(that).removeClass("shake");
+                        }, time);
+                    }
+                });
+
+            },
+
+            onSuccess: function() {
+                btn.removeClass("hidden");
+
+            }
+        });
+
+        captcha.generate();
+    });
+    </script>
   </body>
 </html>
