@@ -312,14 +312,14 @@
                                       <div id="captcha">
                                           <div class="controls">
                                               <input class="user-text btn-common" placeholder="Type here" type="text" />
-                                              <button class="validate btn-common">
+                                              <a href="" class="validate btn-common">
                                                   <!-- this image should be converted into inline svg -->
                                                   <img src="captcha/img/enter_icon.png" alt="submit icon">
-                                              </button>
-                                              <button class="refresh btn-common">
+                                              </a>
+                                              <a href="" class="refresh btn-common">
                                                   <!-- this image should be converted into inline svg -->
                                                   <img src="captcha/img/refresh_icon.png" alt="refresh icon">
-                                              </button>
+                                              </a>
                                           </div>
                                       </div>
                                       <p class="wrong info">Wrong!, please try again.</p>
@@ -360,6 +360,10 @@
 
         var btn = $(".registerbtn");
 
+        $(".validate, .refresh").on("click", function(e){
+          e.preventDefault();
+        });
+        
         var captcha = new $.Captcha({
             onFailure: function() {
                 btn.addClass("hidden");

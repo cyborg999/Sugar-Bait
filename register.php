@@ -3,6 +3,8 @@
 Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password)
 */
+require "connect.php";
+
 $link = mysqli_connect("localhost", "root", "", "sugarbait");
  
 // Check connection

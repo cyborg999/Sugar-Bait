@@ -113,7 +113,7 @@
                                             $url = __DIR__."/package.php?id=".$row['id'];
                                           ?>
                                           <!-- Facebook -->
-                                          <a href="http://www.facebook.com/sharer.php?u=<?= $url;?>" target="_blank">
+                                          <a href="http://www.facebook.com/sharer.php?u=package.php?id=<?= $row['id'];?>" target="_blank">
                                               <img src="image/facebook.png" alt="Facebook" />
                                           </a>
                                           <!-- Google+ -->

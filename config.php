@@ -1,9 +1,22 @@
 <?php
+// local
 $server 	= "localhost";
 $db 		= "sugarbait";
 $username 	= "root";
 $charset 	= "utf8";
 $password 	= "";
 
-$db = new PDO("mysql:host=$server;dbname=$db;charset=$charset", $username, $password);
 
+
+// // //live
+// $server 	= "sugarbait.ml";
+// $db 		= "sugarbait";
+// $username 	= "root";
+// $charset 	= "utf8";
+// $password 	= "M@r1c3l@2018";
+
+
+
+
+
+$db = new PDO("mysql:host=$server;dbname=$db;charset=$charset", $username, $password);
