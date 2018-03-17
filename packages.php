@@ -110,10 +110,10 @@
                                         <h4>Php. <?php echo $row["price"] ?></h4>
                                         <div id="share-buttons">
                                           <?php
-                                            $url = __DIR__."/package.php?id=".$row['id'];
+  $url = $_SERVER['HTTP_HOST']."/sg";
                                           ?>
                                           <!-- Facebook -->
-                                          <a href="http://www.facebook.com/sharer.php?u=package.php?id=<?= $row['id'];?>" target="_blank">
+                                          <a href="http://www.facebook.com/sharer.php?u=<?= $url."/";?>package.php?id=<?= $row['id'];?>" target="_blank">
                                               <img src="image/facebook.png" alt="Facebook" />
                                           </a>
                                           <!-- Google+ -->

@@ -3,7 +3,8 @@
   $model  = new Model();
   $package = $model->getPackageById($_GET['id']);
 
-  $url = $_SERVER['HTTP_HOST']."/Sugar-Bait";
+
+  $url = $_SERVER['HTTP_HOST']."/sg";
   $img = "http://".$url.'/admin/packages/'.$package['image'];
   $packageName = $package['name'];
   $desc = $package['include'];
@@ -21,7 +22,7 @@
     <meta property="fb:app_id" content="966242223397117" />
   <meta name="keywords"
           content="Sugarbait Sugar Bait <?= $packageName;?>">
-    <meta property="og:url"           content="<?= $url;?>/>
+    <meta property="og:url"           content="<?= $url;?>"/>
   <meta property="og:type"          content="website" />
   <meta property="og:title"         content="<?= $packageName;?>" />
   <meta property="og:description"   content="<?= $desc;?>" />

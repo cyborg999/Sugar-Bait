@@ -284,7 +284,7 @@ class Model {
 
 		foreach($data as $idx => $d){
 			if($counter == 0){
-				$csv = implode(",", array("Date","On_Process","Pending","Deal"));
+				$csv = implode(",", array("Date","Pending","Deal"));
 				fputcsv($file,explode(',',$csv));
 
 				if($ajaxed) {
@@ -293,8 +293,7 @@ class Model {
 			}
 
 			$d = reset($d);
-			$csv = implode(",", array($idx,$d[0],$d[1],$d[2]));
-
+			$csv = implode(",", array($idx,$d[1],$d[2]));
 			fputcsv($file,explode(',',$csv));
 			
 			if($ajaxed) {
@@ -305,6 +304,7 @@ class Model {
 		}
 
 		fclose($file); 
+
 
 		if($ajaxed) {
 			die(json_encode($text));

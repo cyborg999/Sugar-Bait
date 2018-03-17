@@ -5,6 +5,7 @@
 	$first = reset($packages);
 	$defaultPackage = $model->loadWeeklySale($first['id']);
 ?>
+
 <link rel="stylesheet" href="reports/chosen/docsupport/style.css">
 	<link rel="stylesheet" href="reports/chosen/docsupport/prism.css">
 	<link rel="stylesheet" href="reports/chosen/chosen.css">
@@ -173,6 +174,7 @@
       		});
 		});
 
+		$("#search").trigger("click");
 		loadChart();
 		function loadChart(){
 			// Get the CSV and create the chart
